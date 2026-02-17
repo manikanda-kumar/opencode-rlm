@@ -1,0 +1,27 @@
+# Cloned reference repos (not part of this project)
+.opencode_rlm/
+.opencode-ralph-rlm/
+
+# RLM runtime state and chunks
+.opencode/rlm_state/
+**/rlm_state/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pkl
+
+# Node / Bun
+node_modules/
+bun.lockb
+.cache/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+*.swp
+*.swo
+*~

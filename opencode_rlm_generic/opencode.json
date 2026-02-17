@@ -1,0 +1,112 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "autoupdate": true,
+  "share": "manual",
+  "default_agent": "main",
+  "compaction": {
+    "auto": true,
+    "prune": true
+  },
+  "watcher": {
+    "ignore": [
+      "node_modules/**",
+      ".git/**",
+      "*.log",
+      ".opencode/rlm_state/**"
+    ]
+  },
+  "permission": {
+    "edit": "allow",
+    "bash": "allow",
+    "webfetch": "allow",
+    "skill": {
+      "*": "allow"
+    }
+  },
+  "agent": {
+    "main": {
+      "description": "Full-access worker agent for implementation, analysis, and problem-solving",
+      "mode": "primary",
+      "prompt": "{file:./prompts/main.md}",
+      "tools": {
+        "write": true,
+        "edit": true,
+        "bash": true,
+        "read": true,
+        "grep": true,
+        "glob": true,
+        "webfetch": true,
+        "skill": true
+      },
+      "permission": {
+        "bash": {
+          "*": "allow",
+          "rm -rf /*": "deny",
+          "rm -rf /": "deny"
+        }
+      }
+    },
+    "planner": {
+      "description": "Read-only agent for safe analysis, investigation, and planning",
+      "mode": "primary",
+      "prompt": "{file:./prompts/planner.md}",
+      "temperature": 0.1,
+      "tools": {
+        "write": false,
+        "edit": false,
+        "bash": true,
+        "read": true,
+        "grep": true,
+        "glob": true,
+        "webfetch": true,
+        "skill": true
+      },
+      "permission": {
+        "bash": {
+          "*": "ask",
+          "cat *": "allow",
+          "grep *": "allow",
+          "head *": "allow",
+          "tail *": "allow",
+          "wc *": "allow",
+          "sort *": "allow",
+          "find *": "allow",
+          "ls *": "allow",
+          "tree *": "allow"
+        }
+      }
+    },
+    "rlm-subcall": {
+      "description": "RLM sub-LLM for chunk-level analysis. Given a chunk of context and a query, extract only what is relevant and return structured JSON results.",
+      "mode": "subagent",
+      "temperature": 0.1,
+      "tools": {
+        "read": true,
+        "write": false,
+        "edit": false,
+        "bash": false,
+        "webfetch": false
+      }
+    }
+  },
+  "command": {
+    "rlm": {
+      "template": "Load the rlm skill to process a large context file. $ARGUMENTS",
+      "description": "Run RLM workflow for large context processing",
+      "agent": "main"
+    },
+    "analyze": {
+      "template": "Analyze the following file or topic in depth: $ARGUMENTS\n\nProvide:\n1. Overview and structure\n2. Key findings\n3. Potential issues or improvements\n4. Actionable recommendations",
+      "description": "General-purpose analysis of any file or topic",
+      "agent": "main"
+    },
+    "summarize": {
+      "template": "Summarize the following content comprehensively: $ARGUMENTS\n\nProvide:\n1. Executive summary (2-3 sentences)\n2. Key points organized by theme\n3. Notable details\n4. Conclusions or next steps",
+      "description": "Summarize a large document or dataset",
+      "agent": "planner"
+    }
+  },
+  "instructions": [
+    "AGENTS.md"
+  ]
+}

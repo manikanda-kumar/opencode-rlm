@@ -1,0 +1,4 @@
+.opencode/rlm_state/
+context/*
+!context/.gitkeep
+*.log
