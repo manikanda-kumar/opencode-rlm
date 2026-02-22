@@ -395,9 +395,29 @@ your-project/
 
 ---
 
+## Emerging Alternatives
+
+The RLM ecosystem is evolving fast. Consider these newer approaches that may simplify your setup:
+
+| Approach | Why Consider It | Link |
+|----------|----------------|------|
+| **Official `pip install rlms`** | Paper authors' canonical lib with pluggable environments (local, docker, modal, e2b) and multi-provider support. | [alexzhang13/rlm](https://github.com/alexzhang13/rlm) |
+| **RLM as MCP Server** | Cleaner integration — exposes RLM tools via Model Context Protocol. Free local sub-queries via Ollama. | [richardwhiteii/rlm](https://github.com/richardwhiteii/rlm) |
+| **Bash-first RLM (no Python)** | Eliminates Python dependency entirely. True depth-N recursion via `claude -p`. ~250 lines of bash. | [Tenobrus/claude-rlm](https://github.com/Tenobrus/claude-rlm) |
+| **Programmatic `sub_llm()` (upcoming)** | [OpenCode Issue #8554](https://github.com/anomalyco/opencode/issues/8554) — built-in tool for `sub_llm()` in loops. 3 lines instead of 10,000 tool calls. | Pending in OpenCode core |
+| **Trained RLM via RL** | Prime Intellect is training models to manage context autonomously using `RLMEnv`. | [PrimeIntellect-ai/verifiers](https://github.com/PrimeIntellect-ai/verifiers/) |
+
+**Key finding**: RLM overhead only pays off above ~50KB of context. Below that, direct processing wins. ([Source](https://medium.com/@constantine124/exploring-rlm-part-2-context-engineering-for-coding-agents-b05befc3851d))
+
+---
+
 ## References
 
 - [RLM Paper (arXiv:2512.24601)](https://arxiv.org/abs/2512.24601) — Zhang, Kraska, Khattab (MIT CSAIL)
+- [RLM Official Implementation](https://github.com/alexzhang13/rlm) — Canonical Python lib (`pip install rlms`)
+- [RLM Minimal](https://github.com/alexzhang13/rlm-minimal) — 2-file gist to understand the core loop
 - [claude_code_RLM](https://github.com/Brainqub3/claude_code_RLM) — Original Claude Code RLM implementation
 - [ralph-rlm](https://github.com/doeixd/opencode-ralph-rlm) — Ralph + RLM OpenCode plugin
+- [Prime Intellect RLM Blog](https://www.primeintellect.ai/blog/rlm) — "Recursive Language Models: the paradigm of 2026"
+- [RLM Context Engineering (Cui Xiao)](https://medium.com/@constantine124/exploring-rlm-part-2-context-engineering-for-coding-agents-b05befc3851d) — Practical RLM patterns and crossover analysis
 - [OpenCode Docs](https://opencode.ai/docs/) — Official OpenCode documentation
